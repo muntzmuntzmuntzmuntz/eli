@@ -244,6 +244,7 @@ public class MainActivity extends Activity {
                     try {
                         BRUSH_COLOR = COLORS[index];
                         paintView.init(metrics, BRUSH_COLOR, BRUSH_SIZE);
+                        paintView.setBackground(BACKGROUND_COLOR);
                         setColorButton.setTextColor(BRUSH_COLOR);
                         Log.i(">> SET COLOR", "INDEX: " + index);
                         COLOR_INDEX = index;
@@ -292,6 +293,7 @@ public class MainActivity extends Activity {
                     BRUSH_SIZE = seekBar.getProgress();
                     try {
                         paintView.init(metrics, COLORS[COLOR_INDEX], BRUSH_SIZE);
+                        paintView.setBackground(BACKGROUND_COLOR);
                         Log.i(">> SIZE:", "" +BRUSH_SIZE);
                         SIZE_INDEX = BRUSH_SIZE;
                     } catch (Exception e) {
