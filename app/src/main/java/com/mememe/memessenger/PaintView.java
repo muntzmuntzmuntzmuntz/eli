@@ -63,7 +63,7 @@ public class PaintView extends View {
         mBlur = new BlurMaskFilter(5, BlurMaskFilter.Blur.NORMAL);
     }
 
-    public void init(DisplayMetrics metrics, int color, int size){
+    public void init(DisplayMetrics metrics, int color, int size, int backgroundColor){
         int width = metrics.widthPixels;
         int height = metrics.heightPixels;
 
@@ -71,6 +71,7 @@ public class PaintView extends View {
         mCanvas = new Canvas(mBitmap);
         currentColor = color;
         strokeWidth = size;
+        this.backgroundColor = backgroundColor;
     }
 
     public void clear() {
@@ -134,6 +135,7 @@ public class PaintView extends View {
 
     public void setBackground(int color){
         mCanvas.drawColor(color);
+        invalidate();
     }
 
     @Override

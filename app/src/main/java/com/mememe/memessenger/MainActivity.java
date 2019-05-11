@@ -64,7 +64,7 @@ public class MainActivity extends Activity {
     Boolean bgButtonClicked = false;
     int COLOR_INDEX = 3;
     int SIZE_INDEX = 5;
-    int BG_INDEX = 9;
+    int BG_INDEX = 10;
 
     private Button setColorButton, setSizeButton, setBackgroundButton;
 
@@ -88,8 +88,7 @@ public class MainActivity extends Activity {
         try{
             metrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(metrics);
-            paintView.init(metrics,COLORS[BRUSH_COLOR],BRUSH_SIZE);
-            paintView.setBackground(COLORS[BACKGROUND_COLOR]);
+            paintView.init(metrics,COLORS[BRUSH_COLOR],BRUSH_SIZE, COLORS[BG_INDEX]);
             paintView.normal();
         }catch (Exception e){
             Log.e(">> GG", "GG" +e);
@@ -221,7 +220,7 @@ public class MainActivity extends Activity {
 
             Log.i(">> COLOR INDEX: ", "" + COLOR_INDEX);
             seekBar.setProgress(COLOR_INDEX);
-            paintView.init(metrics, COLORS[COLOR_INDEX], BRUSH_SIZE);
+            paintView.init(metrics, COLORS[COLOR_INDEX], BRUSH_SIZE, COLORS[BG_INDEX]);
             Shader shader = new LinearGradient(0, 0, 800.f, 0.0f, COLORS, null, Shader.TileMode.CLAMP);
 
             ShapeDrawable shape = new ShapeDrawable(new RectShape());
@@ -243,8 +242,7 @@ public class MainActivity extends Activity {
                     int index = seekBar.getProgress();
                     try {
                         BRUSH_COLOR = COLORS[index];
-                        paintView.init(metrics, BRUSH_COLOR, BRUSH_SIZE);
-                        paintView.setBackground(BACKGROUND_COLOR);
+                        paintView.init(metrics, BRUSH_COLOR, BRUSH_SIZE, COLORS[BG_INDEX]);
                         setColorButton.setTextColor(BRUSH_COLOR);
                         Log.i(">> SET COLOR", "INDEX: " + index);
                         COLOR_INDEX = index;
@@ -292,8 +290,7 @@ public class MainActivity extends Activity {
                 public void onStopTrackingTouch(SeekBar seekBar) {
                     BRUSH_SIZE = seekBar.getProgress();
                     try {
-                        paintView.init(metrics, COLORS[COLOR_INDEX], BRUSH_SIZE);
-                        paintView.setBackground(BACKGROUND_COLOR);
+                        paintView.init(metrics, COLORS[COLOR_INDEX], BRUSH_SIZE, COLORS[BG_INDEX]);
                         Log.i(">> SIZE:", "" +BRUSH_SIZE);
                         SIZE_INDEX = BRUSH_SIZE;
                     } catch (Exception e) {
@@ -319,8 +316,8 @@ public class MainActivity extends Activity {
             seekBar.setMax(10);
 
             Log.i(">> COLOR INDEX: ", "" + COLOR_INDEX);
-            seekBar.setProgress(COLOR_INDEX);
-            paintView.init(metrics, COLORS[COLOR_INDEX], BRUSH_SIZE);
+            seekBar.setProgress(BG_INDEX);
+            paintView.init(metrics, COLORS[COLOR_INDEX], BRUSH_SIZE, COLORS[BG_INDEX]);
             Shader shader = new LinearGradient(0, 0, 800.f, 0.0f, COLORS, null, Shader.TileMode.CLAMP);
 
             ShapeDrawable shape = new ShapeDrawable(new RectShape());
@@ -342,10 +339,12 @@ public class MainActivity extends Activity {
                     int index = seekBar.getProgress();
                     try {
                         BACKGROUND_COLOR = COLORS[index];
+                        paintView.init(metrics, COLORS[COLOR_INDEX], BRUSH_SIZE, BACKGROUND_COLOR);
                         paintView.setBackground(BACKGROUND_COLOR);
-//                        paintView.init(metrics, BRUSH_COLOR, BRUSH_SIZE);
-//                        setColorButton.setTextColor(BRUSH_COLOR);
-//                        Log.i(">> SET COLOR", "INDEX: " + index);
+
+                        Toast.makeText(MainActivity.this,"Color: "+BRUSH_COLOR+" Size: "+BRUSH_SIZE,Toast.LENGTH_LONG).show();
+
+
                         BG_INDEX = index;
                     } catch (Exception e) {
                         Log.e(">> SET COLOR", "INDEX: " + index + " Error :" + e);
