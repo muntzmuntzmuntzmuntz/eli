@@ -1,0 +1,7 @@
+<resources>
+    <string name="facebook_app_id">1944055782366599</string>
+    <string name="fb_login_protocol_scheme">fb1944055782366599</string>
+    <string name="app_name">Memessenger</string>
+    <string name="yes">YES</string>
+    <string name="cancel">CANCEL</string>
+</resources>
