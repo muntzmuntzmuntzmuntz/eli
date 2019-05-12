@@ -1,17 +1,25 @@
 package com.mememe.memessenger;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
+import android.os.Build;
+import android.os.Environment;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -34,9 +42,15 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.mememe.memessenger.models.User;
+import com.mememe.memessenger.processors.Save;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -344,7 +358,6 @@ public class MainActivity extends Activity {
 
                         Toast.makeText(MainActivity.this,"Color: "+BRUSH_COLOR+" Size: "+BRUSH_SIZE,Toast.LENGTH_LONG).show();
 
-
                         BG_INDEX = index;
                     } catch (Exception e) {
                         Log.e(">> SET COLOR", "INDEX: " + index + " Error :" + e);
@@ -352,5 +365,10 @@ public class MainActivity extends Activity {
                 }
             });
         }
+    }
+    public void save(View view){
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},  1);
+        new Save().execute(getContentResolver(),getApplicationContext(),paintView);
     }
 }
